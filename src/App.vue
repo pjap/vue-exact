@@ -1,12 +1,30 @@
 <template>
   <div>
-    <div>
-      <button @click="startEffect">Start Effect</button>
-      <br><br>
-      <div id="effect" :class="effectClasses"></div>
-    </div>
+    <button @click="isShown = !isShown">Toggle</button>
+    <p v-if="isShown">Use V-If</p>
+    <p v-else>Use Else If</p>
     <hr>
-    <div :class="[]">I got no class :(</div>
+    <p v-show="isShown">Use V-Show</p>
+    <p v-show="!isShown">Use V-Show Opposite</p>
+    <hr>
+    <ul>
+      <li v-for="(fruit,index) in fruits">{{ index }} {{ fruit }}</li>
+    </ul>
+    <hr>
+    <ul>
+      <ol v-for="(value,keyName, index) in library">{{ value }} - {{ keyName }} - {{ index }}</ol>
+    </ul>
+    <hr>
+    <ul>
+      <li v-for="value in dataObj">
+        {{ value }}
+        <hr>
+        <template v-if="Array.isArray(value)">
+          <div v-for="element in value">{{ element }}</div>
+        </template>
+        <template v-else>{{ value }}</template>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -14,19 +32,22 @@
 export default {
   data() {
     return {
-      effectClasses:{
-        highlight: false,
-        shrink: true
+      isShown: true,
+      fruits: ['mango','durian','barimbing','pisang'],
+      library: {
+        title: 'Lord Of The Rings',
+        author: 'JRR Tolkiens',
+        books: 3
+      },
+      dataObj: {
+        name: 'Test Object',
+        id: 10,
+        data: [1.67, 1.33, 0.98, 2.21]
       }
     }
   },
   methods: {
-    startEffect() {
-      setInterval(() => {
-        this.effectClasses.highlight = !this.effectClasses.highlight
-        this.effectClasses.shrink = !this.effectClasses.shrink
-      },1000)
-    }
+
   },
   computed: {
 
@@ -38,26 +59,5 @@ export default {
 </script>
 
 <style>
-  #effect {
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-  }
-  .highlight {
-    background-color: red;
-    width: 200px !important;
-  }
-  .shrink {
-      background-color: grey;
-      width: 50px !important;
-  }
-  .blue {
-    background-color: blue;
-  }
-  .float {
-    float: right;
-  }
-  .text-color {
-    color: yellow;
-  }
+
 </style>
