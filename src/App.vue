@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <p>Current Value : {{ value }}</p>
-      <button @click="value += 5">Add 5</button>
-      <button @click="value += 1">Add 1</button>
-      <input type="text" placeholder="Set Timer" v-model="timer">
-      <p>{{ checkValue }}</p>
+      <button @click="startEffect">Start Effect</button>
+      <br><br>
+      <div id="effect" :class="effectClasses"></div>
     </div>
+    <hr>
+    <div :class="[]">I got no class :(</div>
   </div>
 </template>
 
@@ -14,24 +14,50 @@
 export default {
   data() {
     return {
-      value: 0,
-      timer: 0
+      effectClasses:{
+        highlight: false,
+        shrink: true
+      }
+    }
+  },
+  methods: {
+    startEffect() {
+      setInterval(() => {
+        this.effectClasses.highlight = !this.effectClasses.highlight
+        this.effectClasses.shrink = !this.effectClasses.shrink
+      },1000)
     }
   },
   computed: {
-    checkValue() {
-      return this.value == 37 ? 'Done' : 'Not Yet'
-    }
+
   },
   watch: {
-    checkValue() {
-      setTimeout(() => {
-        this.value = 0
-      }, this.timer)
-    }
+
   }
 }
 </script>
 
 <style>
+  #effect {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+  }
+  .highlight {
+    background-color: red;
+    width: 200px !important;
+  }
+  .shrink {
+      background-color: grey;
+      width: 50px !important;
+  }
+  .blue {
+    background-color: blue;
+  }
+  .float {
+    float: right;
+  }
+  .text-color {
+    color: yellow;
+  }
 </style>
